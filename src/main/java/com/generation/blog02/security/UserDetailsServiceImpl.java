@@ -1,7 +1,8 @@
-package com.generation.blog02;
+package com.generation.blog02.security;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,11 +12,11 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.generation.blog02.model.Usuario;
 import com.generation.blog02.repository.UsuarioRepository;
-import com.generation.blog02.security.UserDetailsImpl;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 	
+	@Autowired
 	private UsuarioRepository usuarioRepository;
 	//injeção de dependecias para conseguir consultar no banco de dados
 

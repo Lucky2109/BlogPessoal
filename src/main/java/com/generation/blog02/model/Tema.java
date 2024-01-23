@@ -1,9 +1,9 @@
 package com.generation.blog02.model;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-
 import jakarta.persistence.CascadeType;
-import java.util.List;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
