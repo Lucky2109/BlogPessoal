@@ -20,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.generation.blog02.model.Postagem;
 import com.generation.blog02.repository.PostagemRepository;
+import com.generation.blog02.repository.TemaRepository;
 
 import jakarta.validation.Valid;
 
@@ -31,6 +32,9 @@ public class PostagemController {
 	//injeção de dependencias
 	@Autowired
 	private PostagemRepository postagemRepository;
+	
+	@Autowired
+	private TemaRepository temaRepository;
 	
 	//acessado verbo get
 	@GetMapping
@@ -61,18 +65,43 @@ public class PostagemController {
 	
 	@PostMapping
 	public ResponseEntity<Postagem> post(@Valid @RequestBody Postagem postagem){
+		if (temaRepository.existsById(postagem.getTema().getId()))
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(postagemRepository.save(postagem));
+		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tema não existe!", null);
 	}
 	
+	public PostagemRepository getPostagemRepository() {
+		return postagemRepository;
+	}
+
+	public void setPostagemRepository(PostagemRepository postagemRepository) {
+		this.postagemRepository = postagemRepository;
+	}
+
+	public TemaRepository getTemaRepository() {
+		return temaRepository;
+	}
+
+	public void setTemaRepository(TemaRepository temaRepository) {
+		this.temaRepository = temaRepository;
+	}
+
 	@PutMapping
 	public ResponseEntity<Postagem> put(@Valid @RequestBody Postagem postagem){
-		return postagemRepository.findById(postagem.getId())
-		.map(resposta -> ResponseEntity.status(HttpStatus.OK)
-				.body(postagemRepository.save(postagem)))
-		.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+		if(postagemRepository.existsById(postagem.getTema().getId())) {
+			
+		
+			if (temaRepository.existsById(postagem.getTema().getId()))
+				return ResponseEntity.status(HttpStatus.OK)
+				.body(postagemRepository.save(postagem));
+			
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tema não existe", null);
 		
 	}
+	
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+}
 	
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping("/{id}")
