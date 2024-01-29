@@ -79,6 +79,8 @@ public class Usuario {
 		return foto;
 	}
 
+	
+
 	public void setFoto(String foto) {
 		this.foto = foto;
 	}
@@ -90,4 +92,16 @@ public class Usuario {
 	public void setPostagem(List<Postagem> postagem) {
 		this.postagem = postagem;
 	}
+	
+	public Usuario(Long id,String nome, String usuario,String senha, String foto) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.usuario = usuario;
+		this.senha = senha;
+		this.foto = foto;
+		
+	}
+	
+	public Usuario() {	}
 }
